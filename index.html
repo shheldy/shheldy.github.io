@@ -13,36 +13,36 @@
 
     body {
       min-height: 100vh;
-      background: #0a010a;
+      background: #050005;
       font-family: 'Courier New', monospace;
-      color: #e0a0ff;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      position: relative;
+      color: #b080ff;
       overflow: hidden;
+      position: relative;
     }
 
     .container {
       text-align: center;
       padding: 20px;
-      max-width: 90%;
       position: relative;
       z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
     }
 
     h1 {
       font-size: 42px;
       margin-bottom: 15px;
-      color: #ff66b2;
-      text-shadow: 0 0 15px #ff3399, 0 0 30px #ff66b2;
+      color: #d080ff;
+      text-shadow: 0 0 15px #8040a0, 0 0 30px #a060c0;
       animation: glow 2s ease-in-out infinite alternate;
     }
 
     p.subtitle {
       font-size: 22px;
-      color: #c080ff;
+      color: #a070c0;
       margin-bottom: 40px;
       line-height: 1.5;
     }
@@ -52,66 +52,114 @@
       font-family: 'Courier New', monospace;
       font-size: 20px;
       color: #fff;
-      background: linear-gradient(90deg, #800040, #4d004d);
-      border: 2px solid #ff3399;
+      background: linear-gradient(90deg, #600040, #400040);
+      border: 2px solid #8040a0;
       border-radius: 10px;
       cursor: pointer;
-      box-shadow: 0 0 20px #ff3399, 0 0 40px #ff3399;
+      box-shadow: 0 0 20px #8040a0, 0 0 40px #8040a0;
       transition: all 0.3s;
     }
 
     .open-btn:hover {
       transform: scale(1.08);
-      box-shadow: 0 0 30px #ff3399, 0 0 60px #ff3399;
+      box-shadow: 0 0 30px #8040a0, 0 0 60px #8040a0;
     }
 
-    /* Скрытые элементы */
     .hidden {
       display: none !important;
     }
 
-    /* Сердце из слов */
-    .heart-container {
+    /* Бьющееся сердце */
+    .heart {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 400px;
-      height: 400px;
+      width: 100px;
+      height: 100px;
+      background: #800040;
       display: none;
+      animation: heartbeat 1.2s ease-in-out infinite;
+      z-index: 3;
     }
 
-    .heart-word {
+    .heart::before,
+    .heart::after {
+      content: '';
       position: absolute;
-      font-size: 18px;
-      color: #ff4da6;
-      text-shadow: 0 0 10px #ff1a8c, 0 0 20px #ff4da6;
-      white-space: nowrap;
-      opacity: 0;
-      animation: appearAndPulse 3s ease-in-out forwards;
+      width: 100px;
+      height: 100px;
+      background: #800040;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -50px;
+      left: 0;
+    }
+
+    .heart::after {
+      top: 0;
+      left: 50px;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+      }
+      15% {
+        transform: translate(-50%, -50%) scale(1.15);
+      }
+      30% {
+        transform: translate(-50%, -50%) scale(1);
+      }
+      45% {
+        transform: translate(-50%, -50%) scale(1.1);
+      }
+      60% {
+        transform: translate(-50%, -50%) scale(1);
+      }
     }
 
     @keyframes glow {
       from {
-        text-shadow: 0 0 15px #ff3399, 0 0 30px #ff66b2;
+        text-shadow: 0 0 15px #8040a0, 0 0 30px #a060c0;
       }
       to {
-        text-shadow: 0 0 25px #ff66b2, 0 0 50px #ff99cc;
+        text-shadow: 0 0 25px #a060c0, 0 0 50px #c080ff;
       }
     }
 
-    @keyframes appearAndPulse {
+    /* Матрица с "love you" */
+    .matrix-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 1;
+      display: none;
+    }
+
+    .matrix-column {
+      position: absolute;
+      top: -100%;
+      font-size: 18px;
+      color: #602060;
+      text-shadow: 0 0 5px #8040a0;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      white-space: nowrap;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
       0% {
-        opacity: 0;
-        transform: scale(0.5);
-      }
-      50% {
-        opacity: 1;
-        transform: scale(1.1);
+        transform: translateY(-100%);
       }
       100% {
-        opacity: 1;
-        transform: scale(1);
+        transform: translateY(100vh);
       }
     }
 
@@ -127,90 +175,79 @@
         font-size: 18px;
         padding: 14px 30px;
       }
-      .heart-container {
-        width: 320px;
-        height: 320px;
+      .heart {
+        width: 80px;
+        height: 80px;
       }
-      .heart-word {
-        font-size: 16px;
+      .heart::before,
+      .heart::after {
+        width: 80px;
+        height: 80px;
+      }
+      .heart::before {
+        top: -40px;
+      }
+      .heart::after {
+        left: 40px;
       }
     }
   </style>
 </head>
 <body>
+  <!-- Матрица с "love you" (скрыта до нажатия) -->
+  <div class="matrix-container" id="matrixContainer"></div>
+
   <div class="container" id="mainContent">
     <h1>Уруйдаан, милый мой...</h1>
     <p class="subtitle">
-      Эта открытка — для тебя<br>
+      Эта открытка — только для тебя.<br>
       Просто так, просто потому что ты у меня есть ❤️
     </p>
     <button class="open-btn" id="openBtn">Нажми сюда</button>
   </div>
 
-  <!-- Сердце из слов (скрыто до нажатия) -->
-  <div class="heart-container" id="heartContainer"></div>
+  <!-- Бьющееся сердце (скрыто до нажатия) -->
+  <div class="heart" id="heart"></div>
 
   <script>
-    // === Сердце из слов ===
-    const heartContainer = document.getElementById('heartContainer');
-    const words = [
-      'love you',
-      'my love',
-      'my sweety',
-      'love',
-    ];
+    // === Матрица с "love you" ===
+    const matrixContainer = document.getElementById('matrixContainer');
+    const text = 'love you ';
+    const columnWidth = 30; // Расстояние между столбиками
+    const screenWidth = window.innerWidth;
+    const numColumns = Math.ceil(screenWidth / columnWidth);
 
-    // Функция для создания формы сердца (исправленная)
-    function createHeartShape() {
-      const positions = [];
-      const scale = 12; // Размер сердца
-      const centerX = 200; // Центр по X
-      const centerY = 200; // Центр по Y
-
-      // Генерируем точки по всей форме сердца
-      for (let t = 0; t < Math.PI * 2; t += 0.08) {
-        // Формула сердца
-        const x = 16 * Math.pow(Math.sin(t), 3);
-        const y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
-        
-        positions.push({
-          x: x * scale + centerX,
-          y: y * scale + centerY
-        });
+    for (let i = 0; i < numColumns; i++) {
+      const column = document.createElement('div');
+      column.className = 'matrix-column';
+      
+      // Генерируем длинную строку из "love you"
+      let columnText = '';
+      const repeatCount = Math.ceil(window.innerHeight / 20);
+      for (let j = 0; j < repeatCount; j++) {
+        columnText += text;
       }
-      return positions;
+      column.textContent = columnText;
+      
+      column.style.left = (i * columnWidth) + 'px';
+      column.style.animationDuration = (3 + Math.random() * 4) + 's'; // Разная скорость
+      column.style.animationDelay = (Math.random() * 2) + 's';
+      
+      matrixContainer.appendChild(column);
     }
-
-    const heartPositions = createHeartShape();
-
-    // Распределяем слова равномерно по всему сердцу
-    words.forEach((word, index) => {
-      const el = document.createElement('div');
-      el.className = 'heart-word';
-      el.textContent = word;
-      
-      // Берём позицию из массива, равномерно распределяя
-      const posIndex = Math.floor((index / words.length) * heartPositions.length);
-      const pos = heartPositions[posIndex];
-      
-      el.style.left = pos.x + 'px';
-      el.style.top = pos.y + 'px';
-      el.style.animationDelay = (index * 0.15) + 's';
-      
-      heartContainer.appendChild(el);
-    });
 
     // === Кнопка и переключение ===
     const openBtn = document.getElementById('openBtn');
     const mainContent = document.getElementById('mainContent');
-    const heartContainerEl = document.getElementById('heartContainer');
+    const heart = document.getElementById('heart');
 
     openBtn.addEventListener('click', () => {
       // Скрываем основной контент
       mainContent.classList.add('hidden');
       
-      // Показываем сердце
-      heartContainerEl.style.display = 'block';
+      // Показываем сердце и матрицу
+      heart.style.display = 'block';
+      matrixContainer.style.display = 'block';
     });
   </script>
 </body>
