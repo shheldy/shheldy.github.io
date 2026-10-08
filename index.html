@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Для Уруйдаана ❤️</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0a010a, #1a051a, #2d0a1a);
+      font-family: 'Courier New', monospace;
+      color: #e0a0ff;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    /* Фон с «кодом» */
+    .code-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      font-size: 12px;
+      color: rgba(180, 80, 200, 0.08);
+      white-space: pre;
+      overflow: hidden;
+      z-index: 0;
+      user-select: none;
+      line-height: 1.4;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 20px;
+      max-width: 90%;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+      color: #ff66b2;
+      text-shadow: 0 0 10px #ff3399, 0 0 20px #ff3399;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    p.subtitle {
+      font-size: 14px;
+      color: #c080ff;
+      margin-bottom: 30px;
+      opacity: 0;
+      animation: fadeIn 2s ease forwards 0.5s;
+    }
+
+    /* Сердце из слов */
+    .heart-container {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      margin: 0 auto;
+    }
+
+    .heart-word {
+      position: absolute;
+      font-size: 14px;
+      color: #ff4da6;
+      text-shadow: 0 0 8px #ff1a8c;
+      opacity: 0;
+      animation: floatWord 6s ease-in-out infinite;
+      white-space: nowrap;
+    }
+
+    /* Кнопка «открыть» */
+    .open-btn {
+      margin-top: 40px;
+      padding: 12px 30px;
+      font-family: 'Courier New', monospace;
+      font-size: 16px;
+      color: #fff;
+      background: linear-gradient(90deg, #800040, #4d004d);
+      border: 2px solid #ff3399;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 0 15px #ff3399, 0 0 30px #ff3399;
+      transition: all 0.3s;
+      opacity: 0;
+      animation: fadeIn 1.5s ease forwards 1.5s;
+    }
+
+    .open-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px #ff3399, 0 0 50px #ff3399;
+    }
+
+    /* Скрытое послание */
+    .secret-message {
+      display: none;
+      margin-top: 30px;
+      font-size: 18px;
+      color: #ff99cc;
+      text-shadow: 0 0 10px #ff66b2;
+      animation: fadeIn 2s ease;
+    }
+
+    /* Анимации */
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 10px #ff3399, 0 0 20px #ff3399;
+      }
+      to {
+        text-shadow: 0 0 20px #ff66b2, 0 0 40px #ff66b2;
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes floatWord {
+      0%, 100% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.9);
+      }
+      20%, 80% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      50% {
+        opacity: 0.7;
+        transform: translateY(-10px) scale(1.05);
+      }
+    }
+
+    /* Адаптив для телефонов */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 22px;
+      }
+      p.subtitle {
+        font-size: 12px;
+      }
+      .heart-container {
+        width: 250px;
+        height: 250px;
+      }
+      .heart-word {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Фон с «кодом» -->
+  <div class="code-bg" id="codeBg"></div>
+
+  <div class="container">
+    <h1 id="mainTitle">Уруйдаан, милый мой...</h1>
+    <p class="subtitle">Эта открытка — только для тебя. Просто так. Потому что ты есть. ❤️</p>
+
+    <!-- Сердце из слов -->
+    <div class="heart-container" id="heartContainer"></div>
+
+    <button class="open-btn" id="openBtn">Нажми сюда, сладкий мой</button>
+
+    <div class="secret-message" id="secretMessage">
+      <p>Я тебя очень люблю. Ты — моё всё. 💜</p>
+      <p style="margin-top: 10px; font-size: 14px; color: #c080ff;">
+        Твоя навсегда...
+      </p>
+    </div>
+  </div>
+
+  <!-- Музыка (замените ссылку на свою) -->
+  <!-- Вариант 1: если у вас есть прямой MP3-файл -->
+  <!--
+  <audio id="bgMusic" loop>
+    <source src="your-song.mp3" type="audio/mpeg">
+  </audio>
+  -->
+
+  <!-- Вариант 2: ссылка на Яндекс.Музыку / Spotify (работает не во всех браузерах) -->
+  <!--
+  <audio id="bgMusic" loop>
+    <source src="https://music.yandex.ru/track/12345678" type="audio/mpeg">
+  </audio>
+  -->
+
+  <script>
+    // === Генерация фона с «кодом» ===
+    const codeLines = [
+      'function loveYou() { return "forever"; }',
+      'const myHeart = "Уруйдаан";',
+      'if (you === "sweet") { kiss(); }',
+      'while (alive) { love(you); }',
+      'let us = "together";',
+      'console.log("I love you, Уруйдаан");',
+      'const sweet = "мой сладкий";',
+      'const милый = "мой";',
+      'for (let i = 0; i < Infinity; i++) { love(you); }',
+      'const heart = "💜";',
+      'const forever = true;',
+      'const us = ["ты", "я", "вместе"];',
+      'const loveLanguage = ["код", "сердце", "ты"];',
+      'const myLove = "Уруйдаан";',
+      'const sweetBoy = "мой сладкий";',
+    ];
+
+    const codeBg = document.getElementById('codeBg');
+    let fullCode = '';
+    for (let i = 0; i < 200; i++) {
+      fullCode += codeLines[i % codeLines.length] + '\n';
+    }
+    codeBg.textContent = fullCode;
+
+    // === Сердце из слов ===
+    const heartContainer = document.getElementById('heartContainer');
+    const words = [
+      'love you',
+      'my love',
+      'Уруйдаан',
+      'милый мой',
+      'сладкий мой',
+      'forever',
+      '💜',
+      'я тебя люблю',
+      'my sweet',
+      'always',
+      'ты и я',
+      'my heart',
+    ];
+
+    // Функция для создания формы сердца
+    function createHeartShape() {
+      const positions = [];
+      const scale = 10;
+      for (let t = 0; t < Math.PI * 2; t += 0.15) {
+        const x = 16 * Math.pow(Math.sin(t), 3);
+        const y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+        positions.push({
+          x: x * scale + 150,
+          y: y * scale + 150
+        });
+      }
+      return positions;
+    }
+
+    const heartPositions = createHeartShape();
+
+    words.forEach((word, index) => {
+      const el = document.createElement('div');
+      el.className = 'heart-word';
+      el.textContent = word;
+      
+      // Распределяем слова по форме сердца
+      const posIndex = index % heartPositions.length;
+      const pos = heartPositions[posIndex];
+      
+      el.style.left = pos.x + 'px';
+      el.style.top = pos.y + 'px';
+      el.style.animationDelay = (index * 0.3) + 's';
+      
+      heartContainer.appendChild(el);
+    });
+
+    // === Кнопка и секретное послание ===
+    const openBtn = document.getElementById('openBtn');
+    const secretMessage = document.getElementById('secretMessage');
+    const bgMusic = document.getElementById('bgMusic');
+
+    openBtn.addEventListener('click', () => {
+      secretMessage.style.display = 'block';
+      openBtn.textContent = 'Ты открыл моё сердце ❤️';
+      
+      // Попытка запустить музыку (работает только если есть аудиофайл)
+      if (bgMusic) {
+        bgMusic.play().catch(() => {
+          // Браузер заблокировал автоплей — это нормально
+        });
+      }
+    });
+
+    // === Дополнительная анимация заголовка ===
+    const mainTitle = document.getElementById('mainTitle');
+    setInterval(() => {
+      mainTitle.style.textShadow = 
+        Math.random() > 0.5 
+          ? '0 0 15px #ff3399, 0 0 30px #ff66b2' 
+          : '0 0 10px #cc0066, 0 0 20px #ff3399';
+    }, 500);
+  </script>
+</body>
+</html>
