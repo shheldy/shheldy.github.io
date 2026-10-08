@@ -69,55 +69,46 @@
       display: none !important;
     }
 
-    /* Бьющееся сердце */
-    .heart {
+    /* Бьющееся сердце (SVG) */
+    .heart-container {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 100px;
-      height: 100px;
-      background: #800040;
+      width: 200px;
+      height: 200px;
       display: none;
-      animation: heartbeat 1.2s ease-in-out infinite;
       z-index: 3;
     }
 
-    .heart::before,
-    .heart::after {
-      content: '';
-      position: absolute;
-      width: 100px;
-      height: 100px;
-      background: #800040;
-      border-radius: 50%;
+    .heart-svg {
+      width: 100%;
+      height: 100%;
+      animation: heartbeat 1.2s ease-in-out infinite;
+      filter: drop-shadow(0 0 15px #ff0066) drop-shadow(0 0 30px #ff0066);
     }
 
-    .heart::before {
-      top: -50px;
-      left: 0;
-    }
-
-    .heart::after {
-      top: 0;
-      left: 50px;
+    .heart-shape {
+      fill: #800040;
+      stroke: #ff0066;
+      stroke-width: 2;
     }
 
     @keyframes heartbeat {
       0%, 100% {
-        transform: translate(-50%, -50%) scale(1);
+        transform: scale(1);
       }
       15% {
-        transform: translate(-50%, -50%) scale(1.15);
+        transform: scale(1.15);
       }
       30% {
-        transform: translate(-50%, -50%) scale(1);
+        transform: scale(1);
       }
       45% {
-        transform: translate(-50%, -50%) scale(1.1);
+        transform: scale(1.1);
       }
       60% {
-        transform: translate(-50%, -50%) scale(1);
+        transform: scale(1);
       }
     }
 
@@ -145,21 +136,23 @@
     .matrix-column {
       position: absolute;
       top: -100%;
-      font-size: 18px;
-      color: #602060;
-      text-shadow: 0 0 5px #8040a0;
+      font-size: 20px;
+      font-weight: bold;
+      color: #8040a0;
+      text-shadow: 0 0 8px #a060c0, 0 0 15px #c080ff;
+      white-space: pre;
       writing-mode: vertical-rl;
-      text-orientation: mixed;
-      white-space: nowrap;
+      text-orientation: upright;
+      transform: rotate(180deg);
       animation: fall linear infinite;
     }
 
     @keyframes fall {
       0% {
-        transform: translateY(-100%);
+        transform: translateY(-100%) rotate(180deg);
       }
       100% {
-        transform: translateY(100vh);
+        transform: translateY(100vh) rotate(180deg);
       }
     }
 
@@ -175,20 +168,9 @@
         font-size: 18px;
         padding: 14px 30px;
       }
-      .heart {
-        width: 80px;
-        height: 80px;
-      }
-      .heart::before,
-      .heart::after {
-        width: 80px;
-        height: 80px;
-      }
-      .heart::before {
-        top: -40px;
-      }
-      .heart::after {
-        left: 40px;
+      .heart-container {
+        width: 160px;
+        height: 160px;
       }
     }
   </style>
@@ -200,20 +182,24 @@
   <div class="container" id="mainContent">
     <h1>Уруйдаан, милый мой...</h1>
     <p class="subtitle">
-      Эта открытка — только для тебя.<br>
-      Просто так, просто потому что ты у меня есть ❤️
+      Эта открытка — только для тебя<br>
+      Просто так, прочто потому что ты есть ❤️
     </p>
-    <button class="open-btn" id="openBtn">Нажми сюда</button>
+    <button class="open-btn" id="openBtn">Нажми сюда, сладкий мой</button>
   </div>
 
   <!-- Бьющееся сердце (скрыто до нажатия) -->
-  <div class="heart" id="heart"></div>
+  <div class="heart-container" id="heartContainer">
+    <svg class="heart-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <path class="heart-shape" d="M50 88.4 L50 88.4 C50 88.4 50 88.4 50 88.4 C16.3 57.7 0 37.9 0 22.9 C0 10.3 10.3 0 22.9 0 C32.1 0 41.1 5.4 46.4 13.3 C47.2 14.5 48.8 14.5 49.6 13.3 C54.9 5.4 63.9 0 73.1 0 C85.7 0 96 10.3 96 22.9 C96 37.9 79.7 57.7 46 88.4 L50 88.4 Z"/>
+    </svg>
+  </div>
 
   <script>
     // === Матрица с "love you" ===
     const matrixContainer = document.getElementById('matrixContainer');
-    const text = 'love you ';
-    const columnWidth = 30; // Расстояние между столбиками
+    const text = 'love you';
+    const columnWidth = 50; // Расстояние между столбиками (увеличил для читаемости)
     const screenWidth = window.innerWidth;
     const numColumns = Math.ceil(screenWidth / columnWidth);
 
@@ -223,14 +209,14 @@
       
       // Генерируем длинную строку из "love you"
       let columnText = '';
-      const repeatCount = Math.ceil(window.innerHeight / 20);
+      const repeatCount = Math.ceil(window.innerHeight / 25);
       for (let j = 0; j < repeatCount; j++) {
-        columnText += text;
+        columnText += 'love\nyou\n';
       }
       column.textContent = columnText;
       
       column.style.left = (i * columnWidth) + 'px';
-      column.style.animationDuration = (3 + Math.random() * 4) + 's'; // Разная скорость
+      column.style.animationDuration = (6 + Math.random() * 4) + 's'; // Замедлил (было 3-7с, стало 6-10с)
       column.style.animationDelay = (Math.random() * 2) + 's';
       
       matrixContainer.appendChild(column);
@@ -239,14 +225,14 @@
     // === Кнопка и переключение ===
     const openBtn = document.getElementById('openBtn');
     const mainContent = document.getElementById('mainContent');
-    const heart = document.getElementById('heart');
+    const heartContainer = document.getElementById('heartContainer');
 
     openBtn.addEventListener('click', () => {
       // Скрываем основной контент
       mainContent.classList.add('hidden');
       
       // Показываем сердце и матрицу
-      heart.style.display = 'block';
+      heartContainer.style.display = 'block';
       matrixContainer.style.display = 'block';
     });
   </script>
